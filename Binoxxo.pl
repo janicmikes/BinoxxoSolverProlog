@@ -1,6 +1,12 @@
+:- use_module(library(clpfd)).
+
 binoxxoInput(x).
 binoxxoInput(o).
 
+/*
+    Rule 1
+    No more than two x or o can be together
+*/
 /*
     Define all possible horizontal combinations between adjunct cells
 */
@@ -21,6 +27,21 @@ legalVerticalCombination(x, o, x).
 legalVerticalCombination(o, x, o).
 legalVerticalCombination(x, o, o).
 legalVerticalCombination(o, x, x).
+
+
+/*
+    Rule 2
+    Each row and column has equally as much x as o's
+*/
+count_occurrences(List, Occ):-
+    findall([X,L], (bagof(true,member(X,List),Xs), length(Xs,L)), Occ).
+
+/*
+    Rule 3
+    Each row is unique and each column is unique
+*/
+
+
 
 /*
     Output the grid
