@@ -8,25 +8,78 @@ binoxxoInput(o).
     No more than two x or o can be together
 */
 /*
-    Define all possible horizontal combinations between adjunct cells
+    Define all possible combinations between adjunct cells
 */
-legalHorizontalCombination(x, x, o).
-legalHorizontalCombination(o, o, x).
-legalHorizontalCombination(x, o, x).
-legalHorizontalCombination(o, x, o).
-legalHorizontalCombination(x, o, o).
-legalHorizontalCombination(o, x, x).
+legalTriple(x, x, o).
+legalTriple(o, o, x).
+legalTriple(x, o, x).
+legalTriple(o, x, o).
+legalTriple(x, o, o).
+legalTriple(o, x, x).
+
+/*
+    Create a border columns with ~
+*/
+appendBorderColumns([[Head | Tail]], [NewRow]) :-
+    append([Head | Tail], ['~'], TempRow),
+    append(['~'], TempRow, NewRow).
+
+appendBorderColumns([[Head | Tail] | Tail2], [NewRow | Tail3]) :-
+    append([Head | Tail], ['~'], TempRow),
+    append(['~'], TempRow, NewRow),
+    appendBorderColumns(Tail2, Tail3).
+
+/*
+    Create a row to be placed above and below the given grid
+*/
+createBorderRow([[_] | _], ['~']).
+createBorderRow([[_ | Tail] | _], ['~' | Row]) :- createBorderRow([Tail], Row).
+
+/*
+    Make sure that the cell has legal adjenct cells
+*/
+checkCell([[E11, E12, E13], [E21, E22, E23], [E31, E32, E33]]) :-
+    shipInput(E11), shipInput(E12), shipInput(E13),
+    shipInput(E21), shipInput(E22), shipInput(E23),
+    shipInput(E31), shipInput(E32), shipInput(E33),
+    legalTriple(E11, E12,E13),
+    legalTriple(E21, E22,E23),
+    legalTriple(E31, E32,E33),
+    legalTriple(E11, E21,E31),
+    legalTriple(E12, E22,E32),
+    legalTriple(E13, E23,E33).
 
 
 /*
-    Define all possible vertical combinations between adjunct cells
+    Check all cells to make sure that they can be placed next to each other
 */
-legalVerticalCombination(x, x, o).
-legalVerticalCombination(o, o, x).
-legalVerticalCombination(x, o, x).
-legalVerticalCombination(o, x, o).
-legalVerticalCombination(x, o, o).
-legalVerticalCombination(o, x, x).
+checkAllCells(_, [['~', E12, '~'], [E21, E22, '~'], ['~', '~', '~']]) :-
+    checkCell([['~', E12, '~'], [E21, E22, '~'], ['~', '~', '~']]).
+
+checkAllCells(_, [[_, _, '~'], [_, '~', '~'], ['~', '~', '~']]).
+
+checkAllCells(Grid, [['~', E12, '~' | Tail1], [E21, E22, E23 | Tail2], ['~', '~', '~' | Tail3]]) :-
+    checkCell([['~', E12, '~'], [E21, E22, E23], ['~', '~', '~']]),
+    checkAllCells(Grid, [[E12, '~' | Tail1], [E22, E23 | Tail2], ['~', '~' | Tail3]]).
+   
+checkAllCells(Grid, [[_, E12, E13 | Tail1], [_, '~', E23 | Tail2], ['~', '~', '~' | Tail3]]) :-
+    checkAllCells(Grid, [[E12, E13 | Tail1], ['~', E23 | Tail2], ['~', '~' | Tail3]]).
+
+checkAllCells([_, SecondGridRow | OtherGridRows], [['~', E12, '~'], [E21, E22, '~'], ['~', E32, '~'] | _]) :-
+    checkCell([['~', E12, '~'], [E21, E22, '~'], ['~', E32, '~']]),
+    checkAllCells([SecondGridRow | OtherGridRows], [SecondGridRow | OtherGridRows]).
+
+checkAllCells([_, SecondGridRow | OtherGridRows], [[_, _, '~'], [_, '~', '~'], [_, _, '~'] | _]) :-
+    checkAllCells([SecondGridRow | OtherGridRows], [SecondGridRow | OtherGridRows]).
+ 
+checkAllCells(Grid, [['~', E12, '~' | Tail1], [E21, E22, E23 | Tail2], ['~', E32, '~' | Tail3] | Tail]) :-
+    checkCell([['~', E12, '~'], [E21, E22, E23], ['~', E32, '~']]),
+    checkAllCells(Grid, [[E12, '~' | Tail1], [E22, E23 | Tail2], [E32, '~' | Tail3] | Tail]).
+
+checkAllCells(Grid, [[_, E12, E13 | Tail1], [_, '~', E23 | Tail2], [_, E32, E33 | Tail3] | Tail]) :-
+    checkAllCells(Grid, [[E12, E13 | Tail1], ['~', E23 | Tail2], [E32, E33 | Tail3] | Tail]).
+
+
 
 
 /*
