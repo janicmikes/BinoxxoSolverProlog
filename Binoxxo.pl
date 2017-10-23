@@ -40,3 +40,13 @@ binoxxo_rows(OtherRows).
 binoxxo(Rows, Columns) :-
 binoxxo_rows(Rows),
 binoxxo_rows(Columns).
+
+
+% Beispielrätsel
+%binoxxo([[A, o, x, o], [o , x, B, x], [x, o, x, C], [D, x, o, x]],
+%[[A, o, x, D], [o, x, o, x], [x, B, x, o], [o, x, C, x]]).
+
+%binoxxo(
+%    [[x, x, o, o], [E, o, F, o], [o, A, o, C], [o, B, x, D]],
+%    [[x, E, o, o], [x, o, A, B], [o, F, o, x], [o, o, C, D]]
+)
