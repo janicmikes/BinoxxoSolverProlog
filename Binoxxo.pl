@@ -1,3 +1,9 @@
+% All-Unique
+all_unique([]).
+all_unique([E|Es]) :-
+   maplist(dif(E), Es),
+   all_unique(Es).
+
 % Matrix transpose function
 transpose([], []).
 transpose([F|Fs], Ts) :-
@@ -52,8 +58,10 @@ neighbour_check(Row),
 binoxxo_rows(OtherRows).
 
 binoxxo(Rows) :-
+all_unique(Rows),
 binoxxo_rows(Rows),
 transpose(Rows, Columns),
+all_unique(Columns),
 binoxxo_rows(Columns),
 maplist(writeln, Rows).
 
