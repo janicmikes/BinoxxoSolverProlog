@@ -1,11 +1,13 @@
+use_module(library(clpfd)).
+
 % Anzahl Vorkommen in einer Liste prüfen
 occurrences(_, [], 0).
 
 occurrences(Item, [Item | Tail], Nof) :-
 occurrences(Item, Tail, NofSub), Nof is NofSub + 1.
 
-occurrences(Item, [Head | Tail], Nof) :-
-occurrences(Item, Tail, Nof), Item \= Head.
+occurrences(Item, [_ | Tail], Nof) :-
+occurrences(Item, Tail, Nof).
 
 % Gleichheit der Häufigkeit von x und o prüfen
 symbol_equality(List) :-
@@ -37,16 +39,38 @@ symbol_equality(Row),
 neighbour_check(Row),
 binoxxo_rows(OtherRows).
 
-binoxxo(Rows, Columns) :-
+binoxxo(Rows) :-
 binoxxo_rows(Rows),
+transpose(Rows, Columns),
 binoxxo_rows(Columns).
 
+binoxxo_problem(1,
+    [[A11, A21, A31, A41, x, A61, A71, o],
+	[o, A22, A32, A42, A52, A62, A72, A82],
+	[A13, x, o, A43, A53, A63, o, A83],
+	[A14, A24, A34, x, x, A64, A74, A84],
+	[x, A25, A35, o, A55, o, A75, A85],
+	[A16, A26, A36, x, A56, A66, A76, o],
+	[A17, A27, A37, A47, A57, A67, x, A87],
+	[o, x, o, A48, A58, o, A78, A88]]
+).
 
-% Beispielrätsel
-%binoxxo([[A, o, x, o], [o , x, B, x], [x, o, x, C], [D, x, o, x]],
-%[[A, o, x, D], [o, x, o, x], [x, B, x, o], [o, x, C, x]]).
+/*
+binoxxo(Rows) :-
+        length(Rows, 9), maplist(same_length(Rows), Rows),
+        append(Rows, Vs), Vs ins 1..9,
+        maplist(all_distinct, Rows),
+        transpose(Rows, Columns),
+        maplist(all_distinct, Columns),
+        Rows = [As,Bs,Cs,Ds,Es,Fs,Gs,Hs,Is].
 
-%binoxxo(
-%    [[x, x, o, o], [E, o, F, o], [o, A, o, C], [o, B, x, D]],
-%    [[x, E, o, o], [x, o, A, B], [o, F, o, x], [o, o, C, D]]
-)
+
+problem(1, [[_,_,_,_,_,_,_,_,_],
+            [_,_,_,_,_,3,_,8,5],
+            [_,_,1,_,2,_,_,_,_],
+            [_,_,_,5,_,7,_,_,_],
+            [_,_,4,_,_,_,1,_,_],
+            [_,9,_,_,_,_,_,_,_],
+            [5,_,_,_,_,_,_,7,3],
+            [_,_,2,_,1,_,_,_,_],
+            [_,_,_,_,4,_,_,_,9]]).*/
