@@ -55,22 +55,15 @@ binoxxo_problem(1,
 	[o, x, o, A48, A58, o, A78, A88]]
 ).
 
-/*
-binoxxo(Rows) :-
-        length(Rows, 9), maplist(same_length(Rows), Rows),
-        append(Rows, Vs), Vs ins 1..9,
-        maplist(all_distinct, Rows),
-        transpose(Rows, Columns),
-        maplist(all_distinct, Columns),
-        Rows = [As,Bs,Cs,Ds,Es,Fs,Gs,Hs,Is].
+transpose([], []).
+transpose([F|Fs], Ts) :-
+    transpose(F, [F|Fs], Ts).
 
+transpose([], _, []).
+transpose([_|Rs], Ms, [Ts|Tss]) :-
+        lists_firsts_rests(Ms, Ts, Ms1),
+        transpose(Rs, Ms1, Tss).
 
-problem(1, [[_,_,_,_,_,_,_,_,_],
-            [_,_,_,_,_,3,_,8,5],
-            [_,_,1,_,2,_,_,_,_],
-            [_,_,_,5,_,7,_,_,_],
-            [_,_,4,_,_,_,1,_,_],
-            [_,9,_,_,_,_,_,_,_],
-            [5,_,_,_,_,_,_,7,3],
-            [_,_,2,_,1,_,_,_,_],
-            [_,_,_,_,4,_,_,_,9]]).*/
+lists_firsts_rests([], [], []).
+lists_firsts_rests([[F|Os]|Rest], [F|Fs], [Os|Oss]) :-
+        lists_firsts_rests(Rest, Fs, Oss).
