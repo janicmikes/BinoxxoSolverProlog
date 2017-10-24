@@ -1,13 +1,16 @@
+/*
+    Easy 4x4 example
+*/
 example0 :-
 binoxxo([
-    [o,o,x,x],
-    [x,x,_,o],
-    [o,x,o,x],
-    [_,o,x,o]
+    [o,_,_,_],
+    [x,_,_,o],
+    [_,x,_,x],
+    [x,_,_,o]
 ]).
+
 /*
     Easy 6x6 example
-    Expected execution time: 0.1 seconds
 */
 example1 :-
 binoxxo([
@@ -19,10 +22,8 @@ binoxxo([
     [_,_,o,o,_,_]]
 ).
 
-
 /*
     Hard 6x6 example
-    Expected execution time: 3.5 seconds
 */
 example2 :-
 binoxxo([
@@ -34,10 +35,8 @@ binoxxo([
     [x,_,_,_,x,_]]
 ).
 
-
 /*
     Easy 8x8 example
-    Expected execution time: 5 seconds
 */
 example3 :-
 binoxxo([
