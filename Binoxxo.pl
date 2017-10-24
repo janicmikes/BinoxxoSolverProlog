@@ -1,3 +1,5 @@
+% Your program goes here
+
 % All-Unique
 all_unique([]).
 all_unique([E|Es]) :-
@@ -65,3 +67,11 @@ all_unique(Columns),
 binoxxo_rows(Columns),
 maplist(writeln, Rows).
 
+/** <examples>
+?- binoxxo([
+    [o,_,_,_],
+    [x,_,_,o],
+    [_,x,_,x],
+    [x,_,_,o]
+]).
+*/
