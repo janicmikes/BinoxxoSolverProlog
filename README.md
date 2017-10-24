@@ -1,19 +1,28 @@
 # Binoxxo Puzzle Solver
 
-This program was a university assignment.
+## Liability
 
+This program was a university assignment. No guarantee of correctness.
 
-Run
----
+## Run
 
-These instructions are for linux only, but the program will also work under different operating systems.
+### Swish Online
+Copy the contents of Binoxxo.pl to <https://swish.swi-prolog.org> and select the example from the Examples dropdown.
+
+### Local
 
 Start your prolog interpreter
-    swipl
+```
+swipl
+```
 
-Load the code
-    ?- ['Binoxxo.pl'].
+Load the resources
+```
+?- ['Binoxxo.pl'].
+?- ['Examples.pl'].
+```
 
-You can now also load and run the examples
-    ?- ['Examples.pl'].
-    ?- example2.
+Run the examples
+```
+?- example0.
+```
