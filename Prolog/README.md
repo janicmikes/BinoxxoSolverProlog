@@ -20,13 +20,13 @@ swipl
 
 Load the resources
 
-```bash
+```prolog
 ?- ['Binoxxo.pl'].
 ?- ['Examples.pl'].
 ```
 
 Run the examples
 
-```bash
+```prolog
 ?- example0.
 ```
