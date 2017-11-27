@@ -24,7 +24,11 @@ findCalculationPowerset list sum (headSplit:tailSplits) =
 
 findCalculation list sum = findCalculationPowerset list sum (powerset [1..(length list - 1)])
 
+showCalculationResult (headSplit:tailSplits) calculation =
+    take headSplit calculation ++ "+"
+
 main = do
     args <- getArgs
-    print (findCalculation (head args) (last args))
+    --print (findCalculation (head args) (last args))
+    print $ showCalculationResult (findCalculation (head args) (last args))  (head args)
     exitWith ExitSuccess
